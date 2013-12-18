@@ -1,0 +1,6 @@
+SiteConfig:
+  extensions:
+    - TwitterSiteConfig
+ContentController:
+  extensions:
+    - TwitterController
