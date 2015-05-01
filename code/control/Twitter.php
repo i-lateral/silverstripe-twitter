@@ -38,8 +38,7 @@ class Twitter extends Controller {
             if($this->errorCheck($tweets)) return false;
 
             foreach ($tweets as &$tweet) {
-                $date = new Date();
-                $date->setValue($tweet['created_at']);
+                $date = new DateTime($tweet['created_at']);
 
                 $output->push(new ArrayData(array(
                     'ID' => $tweet['id'],
