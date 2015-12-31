@@ -1,6 +1,7 @@
 <?php
 
-class TwitterSiteConfig extends DataExtension {
+class TwitterSiteConfig extends DataExtension
+{
     public static $db = array(
         'TwitterUserName'           => 'Varchar(100)',
         'TwitterConsumerKey'        => 'Varchar(100)',
@@ -9,7 +10,8 @@ class TwitterSiteConfig extends DataExtension {
         'TwitterAccessTokenSecret'  => 'Varchar(100)'
     );
 
-    function updateCMSFields(FieldList $fields) {
+    public function updateCMSFields(FieldList $fields)
+    {
         $social_fields = ToggleCompositeField::create('TwitterIntegration', 'Twitter Integration',
             array(
                 TextField::create('TwitterUserName', $this->owner->fieldLabel('TwitterUserName')),
