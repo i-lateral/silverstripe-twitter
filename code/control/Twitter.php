@@ -5,18 +5,20 @@
  *
  *
  */
-class Twitter extends Controller {
+class Twitter extends Controller
+{
 
     /**
      * Pull down latest tweets using the twitter API
      *
      * @return ArrayList
      */
-    public function LatestTweets($limit = 3) {
+    public function LatestTweets($limit = 3)
+    {
         $config = SiteConfig::current_site_config();
         $output = new ArrayList();
 
-        if($config->TwitterConsumerKey) {
+        if ($config->TwitterConsumerKey) {
             $tmhOAuth = new tmhOAuth(array(
                 'consumer_key' => $config->TwitterConsumerKey,
                 'consumer_secret' => $config->TwitterConsumerSecret,
@@ -33,9 +35,13 @@ class Twitter extends Controller {
             $response = $tmhOAuth->response['response'];
             $tweets = json_decode($response, true);
 
-            if(!$tweets) return false;
+            if (!$tweets) {
+                return false;
+            }
 
-            if($this->errorCheck($tweets)) return false;
+            if ($this->errorCheck($tweets)) {
+                return false;
+            }
 
             foreach ($tweets as &$tweet) {
                 $date = new SS_Datetime();
@@ -63,7 +69,8 @@ class Twitter extends Controller {
      *
      * @return String
      */
-    public function RenderedLatestTweets($limit = 3) {
+    public function RenderedLatestTweets($limit = 3)
+    {
         $vars = array(
             'Tweets'=>$this->LatestTweets($limit)
         );
@@ -76,7 +83,8 @@ class Twitter extends Controller {
      *
      * @return String
      */
-    private function tweetConvert($tweet_string) {
+    private function tweetConvert($tweet_string)
+    {
         $tweet_string = preg_replace("/((http(s?):\/\/)|(www\.))([\w\.]+)([a-zA-Z0-9?&%.;:\/=+_-]+)/i", "<a href='http$3://$4$5$6' target='_blank'>$2$4$5$6</a>", $tweet_string);
         $tweet_string = preg_replace("/(?<=\A|[^A-Za-z0-9_])@([A-Za-z0-9_]+)(?=\Z|[^A-Za-z0-9_])/", "<a href='http://twitter.com/$1' target='_blank'>$0</a>", $tweet_string);
         $tweet_string = preg_replace("/(?<=\A|[^A-Za-z0-9_])#([A-Za-z0-9_]+)(?=\Z|[^A-Za-z0-9_])/", "<a href='http://twitter.com/search?q=%23$1' target='_blank'>$0</a>", $tweet_string);
@@ -88,15 +96,18 @@ class Twitter extends Controller {
      *
      * @return Boolean
      */
-    private function errorCheck($tweets){
-        if(array_key_exists('errors', $tweets)){
+    private function errorCheck($tweets)
+    {
+        if (array_key_exists('errors', $tweets)) {
             $message = 'We have encountered ' . count($tweets['errors']) . ' error(s): <br />';
 
             foreach ($tweets['errors'] as $error) {
                 $message .= $error['message'].' Code:'.$error['code'].'<br />';
             }
 
-            if(Director::isDev()) throw new Exception($message, 1);
+            if (Director::isDev()) {
+                throw new Exception($message, 1);
+            }
 
             return true;
         }
