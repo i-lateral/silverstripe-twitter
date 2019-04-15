@@ -7,6 +7,13 @@
  */
 class Twitter extends Controller
 {
+    /**
+     * Set whether for fetch ssl links (https) or normal links
+     *
+     * @config
+     * @var boolean
+     */
+    private static $use_https = true;
 
     /**
      * Pull down latest tweets using the twitter API
@@ -17,6 +24,13 @@ class Twitter extends Controller
     {
         $config = SiteConfig::current_site_config();
         $output = new ArrayList();
+        $ssl = Config::inst()->get(self::class, 'use_https');
+
+        if ($ssl) {
+            $profile_img = 'profile_image_url_https';
+        } else {
+            $profile_img = 'profile_image_url';
+        }
 
         if ($config->TwitterConsumerKey) {
             $tmhOAuth = new tmhOAuth(array(
@@ -54,7 +68,7 @@ class Twitter extends Controller
                     'User' => new ArrayData(array(
                         'ID' => $tweet['user']['id'],
                         'Name' => $tweet['user']['name'],
-                        'ProfileImg' => $tweet['user']['profile_image_url_https'],
+                        'ProfileImg' => $tweet['user'][$profile_img],
                         'ScreenName' => $tweet['user']['screen_name']
                     ))
                 )));
