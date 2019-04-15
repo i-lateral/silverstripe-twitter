@@ -54,7 +54,7 @@ class Twitter extends Controller
                     'User' => new ArrayData(array(
                         'ID' => $tweet['user']['id'],
                         'Name' => $tweet['user']['name'],
-                        'ProfileImg' => $tweet['user']['profile_image_url'],
+                        'ProfileImg' => $tweet['user']['profile_image_url_https'],
                         'ScreenName' => $tweet['user']['screen_name']
                     ))
                 )));
