@@ -3,6 +3,7 @@
 namespace ilateral\Twitter\Control;
 
 use DateTime;
+use tmhOAuth;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\View\ArrayData;
 use SilverStripe\Control\Director;
@@ -100,7 +101,7 @@ class Twitter extends Controller
             'Tweets'=>$this->LatestTweets($limit)
         );
 
-        return $this->renderWith(array('LatestTweets'), $vars);
+        return $this->renderWith(array('Includes/LatestTweets'), $vars);
     }
 
     /**
