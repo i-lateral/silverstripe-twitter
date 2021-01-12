@@ -1,5 +1,16 @@
 <?php
 
+namespace ilateral\Twitter\Control;
+
+use DateTime;
+use SilverStripe\ORM\ArrayList;
+use SilverStripe\View\ArrayData;
+use SilverStripe\Control\Director;
+use SilverStripe\Control\Controller;
+use SilverStripe\Core\Config\Config;
+use SilverStripe\SiteConfig\SiteConfig;
+use SilverStripe\ORM\FieldType\DBDatetime;
+
 /**
  *
  *
@@ -58,7 +69,7 @@ class Twitter extends Controller
             }
 
             foreach ($tweets as &$tweet) {
-                $date = new SS_Datetime();
+                $date = new DBDatetime();
                 $date->setValue($tweet['created_at']);
 
                 $output->push(new ArrayData(array(

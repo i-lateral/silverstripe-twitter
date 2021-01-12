@@ -1,5 +1,12 @@
 <?php
 
+namespace ilateral\Twitter\Extension;
+
+use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DataExtension;
+use SilverStripe\Forms\ToggleCompositeField;
+
 class TwitterSiteConfig extends DataExtension
 {
     public static $db = array(
