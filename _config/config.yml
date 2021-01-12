@@ -1,6 +1,6 @@
-SiteConfig:
+SilverStripe\SiteConfig\SiteConfig:
   extensions:
-    - TwitterSiteConfig
-ContentController:
+    - ilateral\Twitter\Extension\TwitterSiteConfig
+SilverStripe\CMS\Controllers\ContentController:
   extensions:
-    - TwitterController
+    - ilateral\Twitter\Extension\TwitterController
