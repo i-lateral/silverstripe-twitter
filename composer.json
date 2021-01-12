@@ -1,7 +1,7 @@
 {
   "name": "i-lateral/silverstripe-twitter",
   "description": "Twitter integration module for Silverstripe using twitters oauth",
-    "type": "silverstripe-module",
+    "type": "silverstripe-vendormodule",
     "homepage": "http://github.com/i-lateral/silverstripe-twitter",
     "keywords": ["silverstripe", "twitter", "oauth"],
     "license": "BSD-3-Clause",
@@ -15,10 +15,14 @@
         "issues": "http://github.com/i-lateral/silverstripe-twitter/issues"
     },
     "require": {
-        "silverstripe/framework": ">=3.1",
-        "silverstripe/cms": ">=3.1"
+        "silverstripe/cms": "^4.1"
     },
     "extra": {
         "installer-name": "twitter"
+    },
+    "autoload": {
+        "psr-4": {
+            "ilateral\\Twitter\\": "src/"
+        }
     }
 }
