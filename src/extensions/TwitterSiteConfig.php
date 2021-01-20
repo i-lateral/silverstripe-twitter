@@ -9,13 +9,13 @@ use SilverStripe\Forms\ToggleCompositeField;
 
 class TwitterSiteConfig extends DataExtension
 {
-    public static $db = array(
+    private static $db = [
         'TwitterUserName'           => 'Varchar(100)',
         'TwitterConsumerKey'        => 'Varchar(100)',
         'TwitterConsumerSecret'     => 'Varchar(100)',
         'TwitterAccessToken'        => 'Varchar(100)',
         'TwitterAccessTokenSecret'  => 'Varchar(100)'
-    );
+    ];
 
     public function updateCMSFields(FieldList $fields)
     {
