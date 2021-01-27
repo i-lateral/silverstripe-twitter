@@ -11,6 +11,7 @@ use SilverStripe\Control\Controller;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\ORM\FieldType\DBDatetime;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 
 /**
  *
@@ -70,20 +71,29 @@ class Twitter extends Controller
             }
 
             foreach ($tweets as &$tweet) {
-                $date = new DBDatetime();
-                $date->setValue($tweet['created_at']);
+                $date = new DateTime($tweet['created_at']);
+                $date = DBDatetime::create()->setValue(
+                    $date->format('Y-m-d H:i:s')
+                );
 
-                $output->push(new ArrayData(array(
-                    'ID' => $tweet['id'],
-                    'Date' => $date,
-                    'Content' => $this->tweetConvert($tweet['text']),
-                    'User' => new ArrayData(array(
-                        'ID' => $tweet['user']['id'],
-                        'Name' => $tweet['user']['name'],
-                        'ProfileImg' => $tweet['user'][$profile_img],
-                        'ScreenName' => $tweet['user']['screen_name']
-                    ))
-                )));
+                $tweet_content = DBHTMLText::create()
+                    ->setValue($this->tweetConvert($tweet['text']));
+
+                $output->push(ArrayData::create(
+                    [
+                        'ID' => $tweet['id'],
+                        'Date' => $date,
+                        'Content' => $tweet_content,
+                        'User' => ArrayData::create(
+                            [
+                                'ID' => $tweet['user']['id'],
+                                'Name' => $tweet['user']['name'],
+                                'ProfileImg' => $tweet['user'][$profile_img],
+                                'ScreenName' => $tweet['user']['screen_name']
+                            ]
+                        )
+                    ]
+                ));
             }
         }
 
